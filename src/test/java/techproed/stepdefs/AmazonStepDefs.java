@@ -16,7 +16,25 @@ public class AmazonStepDefs {
     @When("Arama kutusunda iphone aratir")
     public void arama_kutusunda_iphone_aratir() {
         AmazonPage amazonPage = new AmazonPage();
+        amazonPage.handleCaptcha();
         amazonPage.searchBox.sendKeys("iphone");
+        amazonPage.searchBox.submit();
+    }
+
+    @When("Arama kutusunda samsung aratir")
+    public void aramaKutusundaSamsungAratir() {
+        AmazonPage amazonPage = new AmazonPage();
+        amazonPage.handleCaptcha();
+        amazonPage.searchBox.sendKeys("samsung");
+        amazonPage.searchBox.submit();
+    }
+
+
+    @When("Arama kutusunda nokia aratir")
+    public void aramaKutusundaNokiaAratir() {
+        AmazonPage amazonPage = new AmazonPage();
+        amazonPage.handleCaptcha();
+        amazonPage.searchBox.sendKeys("nokia");
         amazonPage.searchBox.submit();
     }
 
@@ -24,6 +42,22 @@ public class AmazonStepDefs {
     public void sayfayi_kapatir() {
         Driver.closeDriver();
     }
+
+
+    @When("Arama kutusunda {string} aratir")
+    public void aramaKutusundaAratir(String str) {
+        AmazonPage amazonPage = new AmazonPage();
+        amazonPage.handleCaptcha();
+        amazonPage.searchBox.sendKeys(str);
+        amazonPage.searchBox.submit();
+    }
+
+
+    @Given("Kullanici {string} sayfasina gider")
+    public void kullaniciSayfasinaGider(String url) {
+        Driver.getDriver().get(url);
+    }
+
 
 
 }
