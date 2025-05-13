@@ -2,7 +2,9 @@ package techproed.stepdefs;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import techproed.pages.CarRentalPage;
 import techproed.utilities.ConfigReader;
 import techproed.utilities.Driver;
@@ -30,4 +32,26 @@ public class CarRentalStepDefs {
 
     }
 
+    @When("registerlogin butonuna tiklar")
+    public void registerloginButonunaTiklar() {
+        CarRentalPage carRentalPage = new CarRentalPage();
+        carRentalPage.loginRegisterButton.click();
+    }
+
+    @And("kullanici gecerli {string} ve {string} bilgilerini girer")
+    public void kullaniciGecerliVeBilgileriniGirer(String email, String password) {
+        CarRentalPage carRentalPage = new CarRentalPage();
+        carRentalPage.emailTextBox.sendKeys(email);
+        carRentalPage.passwordTextBox.sendKeys(password);
+        carRentalPage.loginButton.click();
+
+    }
+
+    @Then("kullanici login oldugunu dogrular")
+    public void kullaniciLoginOldugunuDogrular() {
+        CarRentalPage carRentalPage = new CarRentalPage();
+        Assert.assertFalse(carRentalPage.loginVerify.getText().contains("Login"));
+
+
+    }
 }

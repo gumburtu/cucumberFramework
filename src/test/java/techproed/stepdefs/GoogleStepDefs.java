@@ -5,9 +5,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import techproed.pages.GooglePage;
 import techproed.utilities.Driver;
 import techproed.utilities.WaitUtils;
+
+import java.time.Duration;
 
 public class GoogleStepDefs {
 
@@ -20,7 +24,9 @@ public class GoogleStepDefs {
 
     @Then("sayfa basliginin {string} icerdigini test eder")
     public void sayfaBasligininIcerdiginiTestEder(String str) {
-        WaitUtils.waitFor(2);
+
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleContains(str));
         Assert.assertTrue(Driver.getDriver().getTitle().contains(str));
     }
 
