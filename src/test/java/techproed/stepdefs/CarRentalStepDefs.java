@@ -1,5 +1,6 @@
 package techproed.stepdefs;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,6 +9,8 @@ import org.junit.Assert;
 import techproed.pages.CarRentalPage;
 import techproed.utilities.ConfigReader;
 import techproed.utilities.Driver;
+
+import java.util.List;
 
 public class CarRentalStepDefs {
 
@@ -54,4 +57,42 @@ public class CarRentalStepDefs {
 
 
     }
+
+    @And("Verilen gecerli email ve password bilgileri ile login olur")
+    public void verilenGecerliEmailVePasswordBilgileriIleLoginOlur(DataTable dataTable) {
+        List<List<String>> lists = dataTable.asLists();
+        System.out.println("lists = " + lists);
+        /*lists = [[email, password], [ayhancan@cars.com, Aa1234567!], [beyhancan@cars.com, Aa1234567!], [ceyhancan@cars.com, Aa1234567!]]         */
+        CarRentalPage carRentalPage = new CarRentalPage();
+        for (int i = 1; i < lists.size();        i++) {
+            carRentalPage.loginRegisterButton.click();
+            String email = lists.get(i).get(0);//email
+            String password = lists.get(i).get(1);//password
+            carRentalPage.emailTextBox.sendKeys(email);
+            carRentalPage.passwordTextBox.sendKeys(password);
+            carRentalPage.loginButton.click();
+            carRentalPage.loginVerify.click();
+            Assert.assertTrue(carRentalPage.logout.isDisplayed());
+            carRentalPage.logout.click();
+            carRentalPage.yesButton.click();
+        }
+    }
+    @And("Verilen gecerli email ve password bilgileri ile login olur ikinci yol")
+    public void verilenGecerliEmailVePasswordBilgileriIleLoginOlurIkinciYol(DataTable dataTable) {
+        CarRentalPage carRentalPage = new CarRentalPage();
+        for (int i = 1; i < dataTable.asLists().size();        i++) {
+            carRentalPage.loginRegisterButton.click();
+            String email = dataTable.row(i).get(0);
+            String password =dataTable.row(i).get(1);
+            carRentalPage.emailTextBox.sendKeys(email);
+            carRentalPage.passwordTextBox.sendKeys(password);
+            carRentalPage.loginButton.click();
+            carRentalPage.loginVerify.click();
+            Assert.assertTrue(carRentalPage.logout.isDisplayed());
+            carRentalPage.logout.click();
+            carRentalPage.yesButton.click();
+        }
+
+    }
+
 }

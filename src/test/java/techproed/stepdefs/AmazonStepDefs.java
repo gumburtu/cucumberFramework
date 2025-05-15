@@ -1,10 +1,14 @@
 package techproed.stepdefs;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.Keys;
 import techproed.pages.AmazonPage;
 import techproed.utilities.ConfigReader;
 import techproed.utilities.Driver;
+
+import java.util.List;
 
 public class AmazonStepDefs {
 
@@ -59,5 +63,30 @@ public class AmazonStepDefs {
     }
 
 
+    @When("verilen bilgiler ile arama yapar")
+    public void verilenBilgilerIleAramaYapar(DataTable dataTable) {
+
+        List<String> list = dataTable.asList();
+        System.out.println("list = " + list);//list = [tablet, mouse, keyboard]
+
+        AmazonPage amazonPage = new AmazonPage();
+        amazonPage.handleCaptcha();
+
+        for (int i = 0; i < list.size(); i++) {
+            amazonPage.searchBox.sendKeys(list.get(i), Keys.ENTER);
+            amazonPage.searchBox.clear();
+        }
+    }
+
+
+    @When("verilen bilgiler ile arama yapar ikinci yol")
+    public void verilenBilgilerIleAramaYaparIkinciYol(List<String> list) {
+        AmazonPage amazonPage = new AmazonPage();
+        amazonPage.handleCaptcha();
+        for (String w : list) {
+            amazonPage.searchBox.sendKeys(w, Keys.ENTER);
+            amazonPage.searchBox.clear();
+        }
+    }
 
 }
