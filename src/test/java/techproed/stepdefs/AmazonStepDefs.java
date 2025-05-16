@@ -1,8 +1,10 @@
 package techproed.stepdefs;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import techproed.pages.AmazonPage;
 import techproed.utilities.ConfigReader;
@@ -31,6 +33,7 @@ public class AmazonStepDefs {
         amazonPage.handleCaptcha();
         amazonPage.searchBox.sendKeys("samsung");
         amazonPage.searchBox.submit();
+        Assert.assertTrue(false);//ekran görüntüsünü rapora eklendigini görmek icin kasten ekledik
     }
 
 
@@ -88,5 +91,6 @@ public class AmazonStepDefs {
             amazonPage.searchBox.clear();
         }
     }
+
 
 }

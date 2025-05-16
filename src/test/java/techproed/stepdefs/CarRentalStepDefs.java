@@ -9,6 +9,7 @@ import org.junit.Assert;
 import techproed.pages.CarRentalPage;
 import techproed.utilities.ConfigReader;
 import techproed.utilities.Driver;
+import techproed.utilities.ExcelUtils;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class CarRentalStepDefs {
         System.out.println("lists = " + lists);
         /*lists = [[email, password], [ayhancan@cars.com, Aa1234567!], [beyhancan@cars.com, Aa1234567!], [ceyhancan@cars.com, Aa1234567!]]         */
         CarRentalPage carRentalPage = new CarRentalPage();
-        for (int i = 1; i < lists.size();        i++) {
+        for (int i = 1; i < lists.size(); i++) {
             carRentalPage.loginRegisterButton.click();
             String email = lists.get(i).get(0);//email
             String password = lists.get(i).get(1);//password
@@ -77,13 +78,14 @@ public class CarRentalStepDefs {
             carRentalPage.yesButton.click();
         }
     }
+
     @And("Verilen gecerli email ve password bilgileri ile login olur ikinci yol")
     public void verilenGecerliEmailVePasswordBilgileriIleLoginOlurIkinciYol(DataTable dataTable) {
         CarRentalPage carRentalPage = new CarRentalPage();
-        for (int i = 1; i < dataTable.asLists().size();        i++) {
+        for (int i = 1; i < dataTable.asLists().size(); i++) {
             carRentalPage.loginRegisterButton.click();
             String email = dataTable.row(i).get(0);
-            String password =dataTable.row(i).get(1);
+            String password = dataTable.row(i).get(1);
             carRentalPage.emailTextBox.sendKeys(email);
             carRentalPage.passwordTextBox.sendKeys(password);
             carRentalPage.loginButton.click();
@@ -94,5 +96,28 @@ public class CarRentalStepDefs {
         }
 
     }
+
+    @Then("exceldeki {string} sayfasindaki kullanici bilgileri ile login olunur")
+    public void exceldekiSayfasindakiKullaniciBilgileriIleLoginOlunur(String sayfaIsmi) {
+
+        CarRentalPage carRentalPage = new CarRentalPage();
+        ExcelUtils excelUtils = new ExcelUtils("src/test/resources/smoketestdata.xlsx", sayfaIsmi);
+
+        for (int i = 1; i <= excelUtils.rowCount(); i++) {
+            String email = excelUtils.getCellData(i, 0);
+            String password = excelUtils.getCellData(i, 1);
+            carRentalPage.emailTextBox.sendKeys(email);
+            carRentalPage.passwordTextBox.sendKeys(password);
+            carRentalPage.loginButton.click();
+            carRentalPage.loginVerify.click();
+            Assert.assertTrue(carRentalPage.logout.isDisplayed());
+            carRentalPage.logout.click();
+            carRentalPage.yesButton.click();
+            carRentalPage.loginRegisterButton.click();
+        }
+
+
+    }
+
 
 }

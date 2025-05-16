@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features",
         glue = "techproed/stepdefs",
-        tags = "@US008",
+        tags = "@US010",
         dryRun = false,
         monochrome = false//true iken console daki ciktilari tek renk olarak verir
 )
