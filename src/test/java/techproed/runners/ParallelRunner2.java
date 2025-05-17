@@ -10,18 +10,18 @@ import org.junit.runner.RunWith;
 @CucumberOptions(//Bu notasyon sayesinde hangi scenariolari calistiracagimizi, hangi raporlari alacağımızı belirtiriz
         plugin = {
                 "pretty",//console da scenariolarimiz ile ilgili ayrintili bilgi almamizi saglar
-                "html:target/default-cucumber-report.html",
-                "json:target/json-reports/cucumber.json",
-                "junit:target/xml-reports/cucumber.xml",
+                "html:target/default-cucumber-report2.html",
+                "json:target/json-reports/cucumber2.json",
+                "junit:target/xml-reports/cucumber2.xml",
                 "rerun:TestOutput/failed_scenario.txt"
         },
         features = "src/test/resources/features",
         glue = {"techproed/stepdefs", "techproed/hooks"},
-        tags = "@US011",
+        tags = "@US012",
         dryRun = false,
         monochrome = false//true iken console daki ciktilari tek renk olarak verir
 )
-public class Runner {
+public class ParallelRunner2 {
 }
 /*
 dryRun = true secilirse scenariolari calistirmadan feature file daki eksik
@@ -29,3 +29,4 @@ stepdefinitionlari kontrol eder, browser acilmaz
 ==> rerun plugini sayesinde fail olan scenariolari (TestOutput/failed_scenario.txt) konumunda
 bir txt dosyasi icinde tutabilir ve olusturacağımız bir özel runner class ile calistirabiliriz
  */
+

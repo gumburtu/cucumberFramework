@@ -15,17 +15,13 @@ import org.junit.runner.RunWith;
                 "junit:target/xml-reports/cucumber.xml",
                 "rerun:TestOutput/failed_scenario.txt"
         },
-        features = "src/test/resources/features",
-        glue = {"techproed/stepdefs", "techproed/hooks"},
-        tags = "@US011",
-        dryRun = false,
-        monochrome = false//true iken console daki ciktilari tek renk olarak verir
+        features = "@TestOutput/failed_scenario.txt",
+        glue = {"techproed/stepdefs", "techproed/hooks"}
+
 )
-public class Runner {
+public class FailedRunner {
 }
 /*
-dryRun = true secilirse scenariolari calistirmadan feature file daki eksik
-stepdefinitionlari kontrol eder, browser acilmaz
-==> rerun plugini sayesinde fail olan scenariolari (TestOutput/failed_scenario.txt) konumunda
-bir txt dosyasi icinde tutabilir ve olusturacağımız bir özel runner class ile calistirabiliriz
- */
+Bu classta sadece fail olan scenariolarimizi calistiracağmız icin features package yolu yerine fail olan scenariolarimizin
+depolandigi failed_scenario.txt dosyamizin yolunu belirtiriz. Dosya yolu belirttigimiz icin basina @ sembolu koymaliyizi
+ayrica tags parametresine de ihtiyacimiz yok */
